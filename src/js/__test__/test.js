@@ -1,42 +1,42 @@
-import orderByProps from '../game';
+import variantOfAttack from '../game';
 
-const obj = {
-  name: 'мечник',
-  health: 10,
-  level: 2,
-  attack: 80,
-  defence: 40,
+const character = {
+  name: 'Лучник',
+  type: 'Bowman',
+  health: 50,
+  level: 3,
+  attack: 40,
+  defence: 10,
+  special: [
+    {
+      id: 8,
+      name: 'Двойной выстрел',
+      icon: 'http://...',
+      description: 'Двойной выстрел наносит двойной урон',
+    },
+    {
+      id: 9,
+      name: 'Нокаутирующий удар',
+      icon: 'http://...',
+      // <- обратите внимание, описание "засекречено"
+    },
+  ],
 };
 
-test('Проверка сортировки с двумя аргументами', () => {
-  expect(orderByProps(obj, ['name', 'level']))
-    .toEqual([
-      { key: 'name', value: 'мечник' },
-      { key: 'level', value: 2 },
-      { key: 'attack', value: 80 },
-      { key: 'defence', value: 40 },
-      { key: 'health', value: 10 },
-    ]);
-});
-
-test('Проверка сортировки если во втором аргументе задано несуществующее свойство', () => {
-  expect(orderByProps(obj, ['name', 'lastname']))
-    .toEqual([
-      { key: 'name', value: 'мечник' },
-      { key: 'attack', value: 80 },
-      { key: 'defence', value: 40 },
-      { key: 'health', value: 10 },
-      { key: 'level', value: 2 },
-    ]);
-});
-
-test('Проверка если во втором аргументе задан массив из более 2х свойств', () => {
-  expect(orderByProps(obj, ['level', 'defence', 'health', 'name', 'attack']))
-    .toEqual([
-      { key: 'level', value: 2 },
-      { key: 'defence', value: 40 },
-      { key: 'health', value: 10 },
-      { key: 'name', value: 'мечник' },
-      { key: 'attack', value: 80 },
-    ]);
+test('Проверка функции с аргументом-деструктором', () => {
+  const result = [
+    {
+      id: 8,
+      name: 'Двойной выстрел',
+      icon: 'http://...',
+      description: 'Двойной выстрел наносит двойной урон',
+    },
+    {
+      id: 9,
+      name: 'Нокаутирующий удар',
+      icon: 'http://...',
+      description: 'Описание недоступно',
+    },
+  ];
+  expect(variantOfAttack(character)).toEqual(result);
 });
